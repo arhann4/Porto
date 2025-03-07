@@ -28,6 +28,7 @@ function reveal() {
     });
 }
 
+
 // Reveal Animation on Scroll
 reveal(); // Initial check
 
@@ -870,7 +871,71 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inisialisasi particles.js jika ada
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
-            // konfigurasi particles
+            particles: {
+                number: {
+                    value: 50,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#2d92ff'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#2d92ff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
         });
     }
 
@@ -889,4 +954,158 @@ document.addEventListener('DOMContentLoaded', () => {
             // konfigurasi chart
         });
     }
+
+    const showMoreButton = document.querySelector('.show-more');
+    const hiddenItems = document.querySelectorAll('.experience-item.hidden');
+
+    showMoreButton.addEventListener('click', function() {
+        hiddenItems.forEach(item => {
+            item.classList.remove('hidden'); // Menghapus kelas hidden untuk menampilkan item
+        });
+        showMoreButton.style.display = 'none'; // Menyembunyikan tombol setelah diklik
+    });
 });
+// Array gambar untuk portfolio
+const portfolioImages = {
+    profile: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    
+    projects: [
+        {
+            id: 1,
+            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+            title: "E-Commerce Platform"
+        },
+        {
+            id: 2, 
+            image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+            title: "Task Management App"
+        },
+        {
+            id: 3,
+            image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60", 
+            title: "Smart Home IoT"
+        },
+        {
+            id: 4,
+            image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+            title: "Code Editor Extension"
+        }
+    ],
+    
+    skills: [
+        {
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+            name: "JavaScript"
+        },
+        {
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+            name: "React"
+        },
+        {
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+            name: "Node.js"
+        },
+        {
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+            name: "Python"
+        }
+    ],
+    
+    background: [
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
+        "https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+    ],
+    
+    certificates: [
+        {
+            image: "https://images.unsplash.com/photo-1523289333742-be1143f6b766?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+            title: "AWS Certified Developer"
+        },
+        {
+            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+            title: "Google Cloud Engineer"
+        }
+    ]
+};
+
+// Fungsi untuk memuat gambar
+function loadPortfolioImages() {
+    // Set gambar profil
+    const profileImage = document.querySelector('.profile-image');
+    if (profileImage) {
+        profileImage.src = portfolioImages.profile;
+    }
+
+    // Load gambar proyek
+    const projectContainer = document.querySelector('.projects-container');
+    if (projectContainer) {
+        portfolioImages.projects.forEach(project => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card reveal-fade';
+            projectCard.innerHTML = `
+                <img src="${project.image}" alt="${project.title}" loading="lazy">
+                <div class="project-info">
+                    <h3>${project.title}</h3>
+                    <a href="#" class="project-link">Lihat Detail</a>
+                </div>
+            `;
+            projectContainer.appendChild(projectCard);
+        });
+    }
+
+    // Load icon skills
+    const skillsContainer = document.querySelector('.skills-container');
+    if (skillsContainer) {
+        portfolioImages.skills.forEach(skill => {
+            const skillItem = document.createElement('div');
+            skillItem.className = 'skill-item reveal-slide-up';
+            skillItem.innerHTML = `
+                <img src="${skill.icon}" alt="${skill.name}">
+                <p>${skill.name}</p>
+            `;
+            skillsContainer.appendChild(skillItem);
+        });
+    }
+
+    // Set background image
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        heroSection.style.backgroundImage = `url(${portfolioImages.background[0]})`;
+    }
+
+    // Load sertifikat
+    const certificatesContainer = document.querySelector('.certificates-container');
+    if (certificatesContainer) {
+        portfolioImages.certificates.forEach(cert => {
+            const certCard = document.createElement('div');
+            certCard.className = 'certificate-card reveal-slide-right';
+            certCard.innerHTML = `
+                <img src="${cert.image}" alt="${cert.title}" loading="lazy">
+                <h4>${cert.title}</h4>
+            `;
+            certificatesContainer.appendChild(certCard);
+        });
+    }
+}
+
+// Panggil fungsi saat DOM sudah dimuat
+document.addEventListener('DOMContentLoaded', loadPortfolioImages);
+
+// Menambahkan efek animasi saat scroll
+const contentElements = document.querySelectorAll('.reveal-fade');
+
+const revealOnScroll = () => {
+    const windowHeight = window.innerHeight;
+    contentElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) {
+            element.classList.add('active');
+        } else {
+            element.classList.remove('active');
+        }
+    });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+

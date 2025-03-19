@@ -2724,3 +2724,103 @@ a:not(.btn):hover::after {
         padding: 1.5rem;
     }
 }
+
+/* Floating Navigation */
+.floating-nav {
+    position: absolute;
+    top: 20px;         /* Ubah dari -60px ke 20px agar lebih terlihat */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;  /* Ubah ke row untuk horizontal layout */
+    gap: 2rem;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    position: relative;
+}
+
+.nav-text {
+    position: absolute;
+    bottom: -40px;      /* Tooltip muncul di bawah */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:hover .nav-text {
+    opacity: 1;
+    visibility: visible;
+    bottom: -35px;
+}
+
+.nav-link i {
+    font-size: 1.2rem;
+}
+
+/* Active state */
+.nav-link.active {
+    color: #4a90e2;
+    background: rgba(74, 144, 226, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .floating-nav {
+        padding: 0.5rem 1rem;
+        top: 15px;    /* Sesuaikan juga untuk mobile */
+    }
+
+    .nav-list {
+        gap: 1rem;
+    }
+
+    .nav-text {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 0.5rem;
+    }
+}
+
+/* Add smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}

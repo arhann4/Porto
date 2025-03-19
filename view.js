@@ -78,6 +78,23 @@ document.addEventListener('DOMContentLoaded', function() {
     images.forEach(img => imageObserver.observe(img));
 });
 
+// Scroll reveal animation
+function revealOnScroll() {
+    const reveals = document.querySelectorAll('.reveal-fade');
+    
+    reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
 // Dark mode toggle
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -378,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // GitHub Stats dengan Personal Access Token
     async function fetchGitHubStats() {
-        const username = 'arhann4';
+        const username = 'SHAIF SYAH ARDHANAn4';
         const token = 'ghp_YourPersonalAccessTokenHere'; // Ganti dengan token Anda
         
         try {
@@ -1108,4 +1125,101 @@ const revealOnScroll = () => {
 
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
+
+// Mouse Trail Effect
+const createTrailDot = () => {
+    const dot = document.createElement('div');
+    dot.className = 'cursor-trail';
+    document.body.appendChild(dot);
+    return dot;
+};
+
+const dots = Array(20).fill().map(createTrailDot);
+let currentDot = 0;
+
+document.addEventListener('mousemove', e => {
+    const dot = dots[currentDot];
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    
+    currentDot = (currentDot + 1) % dots.length;
+    
+    setTimeout(() => {
+        dot.style.opacity = '0';
+    }, 1000);
+});
+
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Counter Animation
+const animateCounter = (element, target) => {
+    let current = 0;
+    const increment = target / 100;
+    
+    const updateCounter = () => {
+        if (current < target) {
+            current += increment;
+            element.textContent = Math.ceil(current);
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = target;
+        }
+    };
+    
+    updateCounter();
+};
+
+// Initialize counters when they come into view
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const counter = entry.target;
+            const target = parseInt(counter.getAttribute('data-target'));
+            animateCounter(counter, target);
+            counterObserver.unobserve(counter);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(counter => {
+    counterObserver.observe(counter);
+});
+
+// Theme Toggle
+const themeToggle = document.querySelector('.theme-toggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    });
+}
+
+// Check saved theme preference
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-theme');
+}
+
+// Parallax Effect
+document.addEventListener('mousemove', e => {
+    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+    
+    document.querySelectorAll('.parallax').forEach(element => {
+        element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+});
 
